@@ -17,20 +17,6 @@
     </url>
 
     <url>
-        <loc>https://www.quartz.ren/tags/fasttext/</loc>
-        <lastmod>2019-03-02T18:23:08.765Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://www.quartz.ren/tags/ML/</loc>
-        <lastmod>2019-03-02T18:23:08.765Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>https://www.quartz.ren/tags/NLP/</loc>
         <lastmod>2019-03-02T18:28:05.866Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -89,6 +75,20 @@
     <url>
         <loc>https://www.quartz.ren/tags/BlockChain/</loc>
         <lastmod>2019-03-02T18:49:14.564Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://www.quartz.ren/tags/fasttext/</loc>
+        <lastmod>2019-03-03T13:42:21.705Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://www.quartz.ren/tags/ML/</loc>
+        <lastmod>2019-03-03T13:42:21.705Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
