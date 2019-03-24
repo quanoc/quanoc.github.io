@@ -8,6 +8,14 @@
     </url>
 
     <url>
+        <loc>https://www.quartz.ren/2018/03/06/some-like-me/</loc>
+        <lastmod>2019-03-24T15:22:02.285Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>https://www.quartz.ren/2018/09/15/fastext4j-encode-problem/</loc>
         <lastmod>2019-03-03T13:42:21.705Z</lastmod>
         <changefreq>weekly</changefreq>
