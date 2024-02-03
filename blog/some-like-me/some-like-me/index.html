@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content>
+    <meta name="keyword" content="Nova,Hexo,Blog">
+    <link rel="shortcut icon" href="/img/ironman-draw.png">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <title>
+        
+          .... - xiaodong的博客 | Nova Blog
+        
+    </title>
+
+    <link rel="canonical" href="https://www.quartz.ren/blog/some-like-me/some-like-me/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS --> 
+    <link rel="stylesheet" href="/css/beantech.min.css">
+    
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/css/highlight.css">
+
+    <link rel="stylesheet" href="/css/widget.css">
+
+    <link rel="stylesheet" href="/css/rocket.css">
+
+    <link rel="stylesheet" href="/css/signature.css">
+
+    <link rel="stylesheet" href="/css/toc.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            background-image: url('bj001.jpg')
+            /*post*/
+        
+    }
+    
+    #signature{
+        background-image: url('/img/signature/BeanTechSign-white.png');
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/tags/#Life" title="Life">Life</a>
+                            
+                        </div>
+                        <h1>....</h1>
+                        <h2 class="subheading">....</h2>
+                        <span class="meta">
+                            Posted by Nova on
+                            2018-03-06
+                        </span>
+                    </div>
+                
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+	
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Nova Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Modify by Yu-Hsuan Yen -->
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <!-- 0306 又是一个三年，看得见的消亡，看不见的成长。不知所措到无能为力。留下的还仅有一部分向前的意愿。相信未来可期 -->
+<p>0307</p>
+<!-- 陈洁开玩笑说：像你这样的人，活该没有小女朋友。
+她总是会精确的评价出我的一些缺点。从最开始的思路混乱、做事拖延，到最近的不上心，粗心做事，傻瓜式思维。其实我也知道我的这些一大部分缺点，也在努力的做一些改变。but 、 -->
+<p>层次不齐的轨迹并没有返程的票，大步追随，向前走。</p>
+<a id="more"></a>
+<p>0308<br>
+一直把学习放在第一位的我们，过着过着就会觉得自己有些可怜了。<br>
+长大了，想的事情就多了，再也无法没有杂念的专注一件事了。以前除了学习，我们似乎不用想什么。<br>
+现在，面对那些成绩优异而又乖巧的农村孩子，我高兴不起来，我怕他们如我般过得不好。<br>
+平淡好像变成了无味，无味又变成痛苦。</p>
+<p>0501<br>
+为了所谓的梦想和生活，还是一直以来的不懂得，性格和风格随环境定性，没有主动的扭转，只会是慢慢的失去之后才明白。但问题是如何主动。</p>
+<p>不管怎样，无论对错，果断的去走吧，碰壁了再改进嘛，如果一直犹豫，连碰壁的机会都木有了…</p>
+<p>0520<br>
+15.12.16 ~ 18.05.16 感谢遇到的每个人，每件事… 方向不同，就不必久留了，虽然在相对较忙的时间段离去，但也问心无愧。希望各自安好。</p>
+<p>0820<br>
+旅行是既不安全也不舒适的，但它能带给我们流光溢彩、繁花似锦的世界。。。</p>
+<p>20190424<br>
+有时候会发现努力的方向不对，你觉得目前的状态收获大吗，效率高吗.如果没有，为什么不去做一些这个年纪想做的事，铺垫一些未来．做一些环境准备．　很多新内容的学习认识，学会都很大程度受环境前提的影响．</p>
+<p>20190425<br>
+一年能有几个百日<br>
+一生又能有几个百日<br>
+留不住的时光<br>
+道不尽的离伤<br>
+余生<br>
+孤独的守望！</p>
+<p>20190426<br>
+天气很不错的一天 想起去看中山公园的郁金香，去看景山公园的牡丹花，去看陶然亭的月季，去看植物园的五彩缤纷。去看天坛的杏花，玉渊潭的樱花。<br>
+只是我有时候不太看得懂这些</p>
+<p>20200420<br>
+时间过得真快<br>
+曾经很长一段时间觉得时间带走了一切<br>
+直到前几天在抖音看到这样一句话： 时间是用来储藏的.<br>
+我开始坚定了一些想法,并谨慎前行</p>
+<p>20200421<br>
+无论走到哪里，<br>
+都应该记住，<br>
+过去的都是假的，<br>
+回忆是一条没有尽头的路，<br>
+一切以往的春天都不复存在，<br>
+就连那最坚韧而又狂乱的爱情归根结底也不过是一种转瞬即逝的现实，<br>
+唯有孤独永恒</p>
+<p>我是一个念旧的人, 很多原因. 这句话是去年看电视剧看到的, 至今也多次见到，更加深刻，提醒自己.</p>
+<p>20200422<br>
+作为老师，抱怨学生是没有用的。他要是可以做好还需要你做什么. 叛逆，作对只是一种反抗和自我、一种发散。我觉得正确的应该是理解和尊重,还有支持，解决他的问题，并且引导叛逆，引导发散。</p>
+<p>20200423<br>
+一点点美好 都可以当成奇迹去珍惜</p>
+<p>20200621<br>
+真正能够让我们幸福的只有一件事 就是改变你的认知水平. 你怎么看待这件事，怎么看待这个世界。<br>
+一个人在一段时期内的痛苦总量是一致的。  但是 如果这个人如果认知水平不一样 他就会跃升到另外一个更幸福的领域。<br>
+这就是我们读书的目的。</p>
+<p>20200628<br>
+凡是有的，还要加给他，让他有余。没有的，连他所有的，也要夺过来。</p>
+<p>罗塞托的秘密不在于饮食，不在于运动，也不在于遗传基因和地理位置，而在于罗塞托社会自身。</p>
+<p>如何走访亲友，如何在半路上停下来用意大利语拉家常，如何在院子里为家人做饭，如何拓展家族规模。</p>
+<p>20221224<br>
+我听到过一句很棒的很有力量的话 就是叫允许一切发生<br>
+因为本身 一切的发生本身你就是 不可能去阻挡他的， 当你允许一切发生的时候，你就会变成一个{柔软的人}{放松的人}.</p>
+<p>20230226<br>
+回头看这些状态笔记和发展历程, 有浮躁、有混乱、有思想心智的成长和成型、也有一些困境 但更有方向 加油.</p>
+<p>20230309<br>
+最近的焦虑都被这段话治愈了<br>
+人生是用来体验的<br>
+不是用来演绎完美的<br>
+我慢慢接受自己的迟钝和平庸<br>
+允许自己出错 允许自己偶尔断电<br>
+带着遗憾拼命绽放<br>
+这是与自己达成和解的唯一办法<br>
+希望大家能放下焦虑和不完美的自己和解<br>
+然后去爱那个完整的自己</p>
+<p>20230312<br>
+哪有什么避风港 风来了 我就慢慢走，雨来了 我就靠边走，打雷了 我就捂着耳朵走 我一个人走了好久 好久<br>
+我想把孩子教育好 也想把父母照顾好 还想把婚姻经营好 我想赚很多很多的钱 我想把什么都照顾好 可我什么都没有顾到<br>
+上有老，不常伴左右 下有小 不陪伴其成长 中有伴 无心好言三句  外有友 却不能一醉方休<br>
+人到一定岁数 自己就是自己的屋檐 再也无法找到地方躲雨</p>
+
+                
+
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/blog/books/StateOfMind/" data-toggle="tooltip" data-placement="top" title="心境，信念">&larr; Previous Post</a>
+                        </li>
+                    
+                    
+                        <li class="next">
+                            <a href="/blog/java/java_thread/" data-toggle="tooltip" data-placement="top" title="Java线程详解01">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                <!-- duoshuo Share start -->
+                
+                <!-- 多说 Share end-->
+
+                <!-- 多说评论框 start -->
+                
+                <!-- 多说评论框 end -->
+
+                <!-- disqus comment start -->
+                
+                    <div class="comment">
+                        <div id="disqus_thread" class="disqus-thread"></div>
+                    </div>
+                
+                <!-- disqus comment end -->
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+    
+      <aside id="sidebar">
+        <div id="toc" class="toc-article">
+        <strong class="toc-title">Contents</strong>
+        
+          <ol class="nav">none</ol>
+        
+        </div>
+      </aside>
+    
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#Life" title="Life">Life</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                        <li><a href="https://quano.gitee.io/" target="_blank">My Wiki</a></li>
+                    
+                        <li><a href="http://beantech.org" target="_blank">Bean Tech</a></li>
+                    
+                        <li><a href="http://blog.kaijun.rocks" target="_blank">Kaijun&#39;s Blog</a></li>
+                    
+                        <li><a href="#" target="_blank">It Helps SEO</a></li>
+                    
+                </ul>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<!-- disqus embedded js code start (one page only need to embed once) -->
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = "quantumcs";
+    var disqus_identifier = "https://www.quartz.ren/blog/some-like-me/some-like-me/";
+    var disqus_url = "https://www.quartz.ren/blog/some-like-me/some-like-me/";
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<!-- disqus embedded js code start end -->
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: 'ℬ'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/quanquan.cs">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="http://weibo.com/quincyzh">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/quanoc">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://www.linkedin.com/in/韵-张-3978b4110">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Nova 2024 
+                    <br>
+                    Theme by <a href="https://github.com/huxpro/huxpro.github.io/">Hux</a> 
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span> 
+                    <!-- re-Ported by <a href="">BeanTech</a>
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="91px" height="20px"
+                        src="https://github.com/huxpro/huxpro.github.io/" >
+                    </iframe> -->
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://www.quartz.ren/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+
+
+<!-- Baidu Tongji -->
+
+<script>
+    // dynamic User by Hux
+    var _baId = '9088151460061a7c449bb9d5a3209fbc';
+
+    // Originial
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?" + _baId;
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+<!-- Image to hack wechat -->
+<img src="https://www.quartz.ren/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>

@@ -1,0 +1,984 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content>
+    <meta name="keyword" content="Nova,Hexo,Blog">
+    <link rel="shortcut icon" href="/img/ironman-draw.png">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <title>
+        
+          xiaodong的博客 | Nova Blog
+        
+    </title>
+
+    <link rel="canonical" href="https://www.quartz.ren/archives/5/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS --> 
+    <link rel="stylesheet" href="/css/beantech.min.css">
+    
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/css/highlight.css">
+
+    <link rel="stylesheet" href="/css/widget.css">
+
+    <link rel="stylesheet" href="/css/rocket.css">
+
+    <link rel="stylesheet" href="/css/signature.css">
+
+    <link rel="stylesheet" href="/css/toc.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            background-image: url('/img/header_img/home-bg-2-dark.png') 
+            /*config*/
+        
+    }
+    
+    #signature{
+        background-image: url('/img/signature/BeanTechSign-white.png');
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                
+                    <div class="site-heading">
+                        <h1>Nova Blog</h1>
+                        <!--<hr class="small">-->
+                        <span class="subheading">To Be A Lean Developer!</span>
+                    </div>
+                
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+	
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Nova Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Main Content -->
+<div class="container">
+    <div class="row">
+        
+
+<!-- USE SIDEBAR -->
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-1
+                col-md-8 col-md-offset-1
+                col-sm-12
+                col-xs-12
+                post-container
+            ">
+            
+                <!-- Main Content -->
+
+
+<div class="post-preview">
+
+    <a href="/blog/entropyIncrease/">
+        <h2 class="post-title">
+            对抗熵增的底层思维
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            
+从熵的角度，热力学第二定律可以被描述为：一个孤立系统熵的变化只能增加不能减少，要减少它的熵，外界必须对它做功。
+
+在统计学意义上，熵度量的是系统的无序度，也就是说，系统越杂乱无章，它的熵值越大。
+熵增理论为什么让好多人一下子顿悟了？
+熵来自物理学热力学第二定律。
+...
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by Nova on
+            2017-11-25
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#生活" title="生活">生活</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/blog/others/entropyIncrease/">
+        <h2 class="post-title">
+            对抗熵增的底层思维
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            
+从熵的角度，热力学第二定律可以被描述为：一个孤立系统熵的变化只能增加不能减少，要减少它的熵，外界必须对它做功。
+
+在统计学意义上，熵度量的是系统的无序度，也就是说，系统越杂乱无章，它的熵值越大。
+熵增理论为什么让好多人一下子顿悟了？
+熵来自物理学热力学第二定律。
+...
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by Nova on
+            2017-11-25
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#生活" title="生活">生活</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/blog/some-like-me/beAnActor/">
+        <h2 class="post-title">
+            成为一名演员，做好一名老师
+        </h2>
+        <h3 class="post-subtitle">
+            The Interpretation of Life
+        </h3>
+        <div class="post-content-preview">
+            
+这个社会如果人不能学会展现自己，在事业和生活上都只会是失败的。
+
+今天在简书上看到这句话，身受同感。
+小时候，我们想读研究生，我们想当科学家，我们想当艺术家、音乐家。又或者我们一直会是名列前茅的佼佼者。
+到后来，慢慢发现其实我们之前一些在意的并不是那么重要，我们也只是在几种平凡的角色上折腾一生。
+然而今天，我们是要像小时候戏精一样的告诉大家我的理想是什么，还是选择将平凡的生活埋藏起来。对故......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by Nova on
+            2017-11-25
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#生活" title="生活">生活</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/blog/netty_thread_module/">
+        <h2 class="post-title">
+            Netty线程模型
+        </h2>
+        <h3 class="post-subtitle">
+            Netty Thread Model
+        </h3>
+        <div class="post-content-preview">
+            Netty框架的主要线程就是I/O线程，线程模型设计的好坏，决定了系统的吞吐量、并发性和安全性等架构质量属性。
+Netty线程模型设计以两点为主要目标：并发性能、锁避免。局部的无锁化和事件驱动的多路复用技术。
+首先，来学习下Netty的线程模型，next，通过对Nio线程NioEventLoop的源码分析，来了解下Netty对于I/O相关的多线程设计原理与实现。
+Netty线程模型
+不同的N......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by Nova on
+            2017-11-24
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#Netty" title="Netty">Netty</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/blog/java/netty_thread_module/">
+        <h2 class="post-title">
+            Netty线程模型
+        </h2>
+        <h3 class="post-subtitle">
+            Netty Thread Model
+        </h3>
+        <div class="post-content-preview">
+            Netty框架的主要线程就是I/O线程，线程模型设计的好坏，决定了系统的吞吐量、并发性和安全性等架构质量属性。
+Netty线程模型设计以两点为主要目标：并发性能、锁避免。局部的无锁化和事件驱动的多路复用技术。
+首先，来学习下Netty的线程模型，next，通过对Nio线程NioEventLoop的源码分析，来了解下Netty对于I/O相关的多线程设计原理与实现。
+Netty线程模型
+不同的N......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by Nova on
+            2017-11-24
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#Netty" title="Netty">Netty</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/blog/esLearningGuide/">
+        <h2 class="post-title">
+            ElasticSearch学习指南
+        </h2>
+        <h3 class="post-subtitle">
+            Elasticsearch Learning Guide
+        </h3>
+        <div class="post-content-preview">
+            Es是目前主流的开源搜索引擎之一，它的用途还是很广泛的。我接触Es是在想实践下Skyeye（分布式应用监控及日志采集项目）的时候。项目中使用Es索引日志，提供可视化的日志搜索功能以及生产日志实时滚动。
+Es不仅用于日志索引、日志分析，还一般用于商品网站的商品搜索以及其它应用级别的搜索功能实现等等。那它为什么有这么强大的功能的，它和数据库相比有哪些优势，又有哪些劣势。我们来认识一下这个主流的搜......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by Nova on
+            2017-11-24
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#Elasticsearch" title="Elasticsearch">Elasticsearch</a>
+            
+              <a href="/tags/#分词" title="分词">分词</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/blog/bigdata/esLearningGuide/">
+        <h2 class="post-title">
+            ElasticSearch学习指南
+        </h2>
+        <h3 class="post-subtitle">
+            Elasticsearch Learning Guide
+        </h3>
+        <div class="post-content-preview">
+            Es是目前主流的开源搜索引擎之一，它的用途还是很广泛的。我接触Es是在想实践下Skyeye（分布式应用监控及日志采集项目）的时候。项目中使用Es索引日志，提供可视化的日志搜索功能以及生产日志实时滚动。
+Es不仅用于日志索引、日志分析，还一般用于商品网站的商品搜索以及其它应用级别的搜索功能实现等等。那它为什么有这么强大的功能的，它和数据库相比有哪些优势，又有哪些劣势。我们来认识一下这个主流的搜......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by Nova on
+            2017-11-24
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#Elasticsearch" title="Elasticsearch">Elasticsearch</a>
+            
+              <a href="/tags/#分词" title="分词">分词</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/blog/nodejs-env/">
+        <h2 class="post-title">
+            Nodejs环境搭建
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            搭建过NodeJs环境的都知道node的版本等问题导致node环境会有各种问题。
+在这里总结下，顺便对node有一个清楚的认识。
+以搭建hexo环境为例
+Node环境说明及搭建
+
+node环境搭建有两种方式
+
+使用离线包安装
+使用nvm管理node版本
+
+搭建过程中注意：稳定的node版本，版本管理。保持node版本和npm版本对应。
+使用离线包安装
+此方法是自己下载node的稳定版本，自定......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by Nova on
+            2017-10-12
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#NodeJs" title="NodeJs">NodeJs</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/blog/redis-cluster/">
+        <h2 class="post-title">
+            Redis集群方案
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            客户端分片
+客户端分片是把分片的逻辑放在Redis客户端实现，通过Redis客户端预先定义好的路由规则，把对Key的访问转发到不同的Redis实例中，最后把返回结果汇集。
+
+优缺点
+
+好处是所有的逻辑都是可控的，不依赖与第三方分布式中间件。开发清楚怎么实现分片、路由的规则，不用担心踩坑。
+缺点是，这是一种静态的分片方案，需要增加或者减少redis实例的数量时，需要手工调整分片的程序。并且可运......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by Nova on
+            2017-03-22
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#redis" title="redis">redis</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/blog/hexo-theme-beantech/">
+        <h2 class="post-title">
+            [Hexo] Theme BeanTech
+        </h2>
+        <h3 class="post-subtitle">
+            This is hexo theme Demo.
+        </h3>
+        <div class="post-content-preview">
+            
+Ported Theme of Hux Blog, Thank Huxpro for designing such a flawless theme.
+This BeanTech theme created by YuHsuan modified from the original Porter Kaijun
+
+
+
+
+Usage
+
+I publish the whole project f......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by Nova on
+            2017-03-18
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#Hexo" title="Hexo">Hexo</a>
+            
+              <a href="/tags/#Blog" title="Blog">Blog</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+
+
+<!-- Pager -->
+
+<ul class="pager">
+    
+        <li class="previous">
+            <a href="/archives/4/">&larr; Newer Posts</a>
+        </li>
+    
+    
+        <li class="next">
+            <a href="/archives/6/">Older Posts &rarr;</a>
+        </li>
+    
+</ul>
+
+
+
+                <!-- 如果开启评论功能 -->
+                
+            </div>
+
+          <!-- Sidebar Container -->
+<div class="
+    col-lg-3 col-lg-offset-0
+    col-md-3 col-md-offset-0
+    col-sm-12
+    col-xs-12
+    sidebar-container
+">
+    
+        <!-- Featured Tags -->
+
+<section>
+    <!-- no hr -->
+    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+    <div class="tags">
+        
+            
+            <a href="/tags/#BlockChain" title="BlockChain" rel="3">BlockChain</a>
+            
+        
+            
+            <a href="/tags/#生活" title="生活" rel="5">生活</a>
+            
+        
+            
+            <a href="/tags/#Linux" title="Linux" rel="3">Linux</a>
+            
+        
+            
+            <a href="/tags/#Elasticsearch" title="Elasticsearch" rel="2">Elasticsearch</a>
+            
+        
+            
+            <a href="/tags/#分词" title="分词" rel="2">分词</a>
+            
+        
+            
+            <a href="/tags/#Flink" title="Flink" rel="2">Flink</a>
+            
+        
+            
+            <a href="/tags/#Life" title="Life" rel="4">Life</a>
+            
+        
+            
+            <a href="/tags/#Hexo" title="Hexo" rel="2">Hexo</a>
+            
+        
+            
+            <a href="/tags/#Blog" title="Blog" rel="2">Blog</a>
+            
+        
+            
+            <a href="/tags/#Java" title="Java" rel="2">Java</a>
+            
+        
+            
+            <a href="/tags/#Netty" title="Netty" rel="3">Netty</a>
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+            <a href="/tags/#微服务" title="微服务" rel="2">微服务</a>
+            
+        
+            
+        
+            
+            <a href="/tags/#Machine Learning" title="Machine Learning" rel="2">Machine Learning</a>
+            
+        
+            
+            <a href="/tags/#Deep Learning" title="Deep Learning" rel="3">Deep Learning</a>
+            
+        
+            
+            <a href="/tags/#fasttext" title="fasttext" rel="4">fasttext</a>
+            
+        
+            
+            <a href="/tags/#NLP" title="NLP" rel="12">NLP</a>
+            
+        
+            
+        
+            
+        
+    </div>
+</section>
+
+        <hr>
+    
+        <!-- Short About -->
+<section class="visible-md visible-lg">
+    <h5><a href="/about/">ABOUT ME</a></h5>
+    <div class="short-about">
+
+        
+            <img id = "avatar_pic" src="/img/avatar.jpg" />
+        
+
+        
+            <p>我要成为魔法师!</p>
+        
+
+        <!-- SNS Link -->
+        <ul class="list-inline">
+            
+            
+            
+                <li>
+                    <a target="_blank" href="https://www.zhihu.com/people/quanquan.cs">
+                        <span class="fa-stack fa-lg">
+                            <i class="fa fa-circle fa-stack-2x"></i>
+                            <i class="fa  fa-stack-1x fa-inverse">知</i>
+                        </span>
+                    </a>
+                </li>
+            
+
+            
+                <li>
+                    <a target="_blank" href="http://weibo.com/quincyzh">
+                        <span class="fa-stack fa-lg">
+                            <i class="fa fa-circle fa-stack-2x"></i>
+                            <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                        </span>
+                    </a>
+                </li>
+            
+
+            
+
+            
+                <li>
+                    <a target="_blank"  href="https://github.com/quanoc">
+                        <span class="fa-stack fa-lg">
+                            <i class="fa fa-circle fa-stack-2x"></i>
+                            <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                        </span>
+                    </a>
+                </li>
+            
+            
+            
+            
+                <li>
+                    <a target="_blank"  href="https://www.linkedin.com/in/韵-张-3978b4110">
+                        <span class="fa-stack fa-lg">
+                            <i class="fa fa-circle fa-stack-2x"></i>
+                            <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                        </span>
+                    </a>
+                </li>
+            
+        </ul>
+    </div>
+</section>
+        <hr>
+    
+        
+  <h5>RECENT POSTS</h3>
+  <div class="widget">
+    <ul>
+      
+        <li>
+          <a href="/blog/micoservice/002.gateway/">网关-理解与实现</a>
+        </li>
+      
+        <li>
+          <a href="/blog/risk/001.rule_engine/">规则引擎概述及实现</a>
+        </li>
+      
+        <li>
+          <a href="/blog/micoservice/001.cache/">缓存-应用场景</a>
+        </li>
+      
+        <li>
+          <a href="/blog/nlp/nlp_task02/">NLP基础任务(二)</a>
+        </li>
+      
+        <li>
+          <a href="/blog/ml/003.data_driven/">数据驱动</a>
+        </li>
+      
+    </ul>
+  </div>
+
+        <hr>
+    
+        <!-- Friends Blog -->
+
+<h5>FRIENDS</h5>
+<ul class="list-inline">
+
+    
+        <li><a href="https://quano.gitee.io/" target="_blank">My Wiki</a></li>
+    
+        <li><a href="http://beantech.org" target="_blank">Bean Tech</a></li>
+    
+        <li><a href="http://blog.kaijun.rocks" target="_blank">Kaijun&#39;s Blog</a></li>
+    
+        <li><a href="#" target="_blank">It Helps SEO</a></li>
+    
+</ul>
+
+        <hr>
+    
+</div>
+
+        
+    </div>
+</div>
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/quanquan.cs">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="http://weibo.com/quincyzh">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/quanoc">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://www.linkedin.com/in/韵-张-3978b4110">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Nova 2024 
+                    <br>
+                    Theme by <a href="https://github.com/huxpro/huxpro.github.io/">Hux</a> 
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span> 
+                    <!-- re-Ported by <a href="">BeanTech</a>
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="91px" height="20px"
+                        src="https://github.com/huxpro/huxpro.github.io/" >
+                    </iframe> -->
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://www.quartz.ren/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+
+
+<!-- Baidu Tongji -->
+
+<script>
+    // dynamic User by Hux
+    var _baId = '9088151460061a7c449bb9d5a3209fbc';
+
+    // Originial
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?" + _baId;
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+<!-- Image to hack wechat -->
+<img src="https://www.quartz.ren/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>

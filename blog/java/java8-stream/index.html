@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content>
+    <meta name="keyword" content="Nova,Hexo,Blog">
+    <link rel="shortcut icon" href="/img/ironman-draw.png">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <title>
+        
+          原来你是这样的Stream - xiaodong的博客 | Nova Blog
+        
+    </title>
+
+    <link rel="canonical" href="https://www.quartz.ren/blog/java/java8-stream/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS --> 
+    <link rel="stylesheet" href="/css/beantech.min.css">
+    
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/css/highlight.css">
+
+    <link rel="stylesheet" href="/css/widget.css">
+
+    <link rel="stylesheet" href="/css/rocket.css">
+
+    <link rel="stylesheet" href="/css/signature.css">
+
+    <link rel="stylesheet" href="/css/toc.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            background-image: url('undefined')
+            /*post*/
+        
+    }
+    
+    #signature{
+        background-image: url('/img/signature/BeanTechSign-white.png');
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/tags/#Java" title="Java">Java</a>
+                            
+                        </div>
+                        <h1>原来你是这样的Stream</h1>
+                        <h2 class="subheading"></h2>
+                        <span class="meta">
+                            Posted by Nova on
+                            2018-10-11
+                        </span>
+                    </div>
+                
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+	
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Nova Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Modify by Yu-Hsuan Yen -->
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <p>Java 8 API添加了一个新的抽象称为流Stream，可以让你以一种声明的方式处理数据。</p>
+<p>Stream 使用一种类似用 SQL 语句从数据库查询数据的直观方式来提供一种对 Java 集合运算和表达的高阶抽象。</p>
+<p>Stream API可以极大提高Java程序员的生产力，让程序员写出高效率、干净、简洁的代码。</p>
+<p>这种风格将要处理的元素集合看作一种流， 流在管道中传输， 并且可以在管道的节点上进行处理， 比如筛选， 排序，聚合等。</p>
+<p>元素流在管道中经过中间操作（intermediate operation）的处理，最后由最终操作(terminal operation)得到前面处理的结果。</p>
+<a id="more"></a>
+<p>先来看一道题目.</p>
+<h2><span id="一题目">一.题目</span></h2>
+<p>从一列单词中选出字母a开头的单词,按字母排序后返回前3个.</p>
+<blockquote>
+<p>比如 are,where,advance, anvato, java, abc</p>
+</blockquote>
+<h3><span id="外部迭代方式">外部迭代方式</span></h3>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">List&lt;String&gt; list = Lists.newArrayList(<span class="string">"are"</span>, <span class="string">"where"</span>, <span class="string">"advance"</span>, <span class="string">"java"</span>, <span class="string">"abc"</span>);</span><br><span class="line">List&lt;String&gt; tempList = Lists.newArrayList();</span><br><span class="line">List&lt;String&gt; result = List.newArrayList();</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;list.size();i++)&#123;</span><br><span class="line">	<span class="keyword">if</span>(list.get(i).startsWith(<span class="string">"a"</span>))&#123;</span><br><span class="line">		tempList.add(list.get(i));</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">tempList.sort(Comparator.naturalOrder());</span><br><span class="line">result = tempList.subList(<span class="number">0</span>,<span class="number">3</span>);</span><br><span class="line">result.forEach(System.out::println);</span><br></pre></td></tr></table></figure>
+<h3><span id="stream实现方式">stream实现方式</span></h3>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">List&lt;String&gt; list = Lists.newArrayList(<span class="string">"are"</span>, <span class="string">"where"</span>, <span class="string">"advance"</span>, <span class="string">"java"</span>, <span class="string">"abc"</span>);</span><br><span class="line">list.stream().filter(s -&gt; s.startsWith(<span class="string">"a"</span>)).sorted().limit(<span class="number">3</span>)</span><br><span class="line">	.collect(Collectors.toList()).forEach(System.out::println)</span><br></pre></td></tr></table></figure>
+<h2><span id="二解读">二.解读</span></h2>
+<p>对于遍历一个集合,传统的做法大概是用Iterator,或者for循环.这两种方式都属于外部迭代.</p>
+<h3><span id="外部迭代">外部迭代:</span></h3>
+<p>外部迭代存在的问题:</p>
+<ul>
+<li>迭代的逻辑需要开发者自己手写</li>
+<li>如果存在排序这样的有状态的中间操作,不得不进行多次迭代</li>
+<li>多次迭代增加了临时变量,导致内存的浪费</li>
+</ul>
+<p>Java5引入的foreach解决了部分问题,但新问题:</p>
+<ul>
+<li>foreach遍历不能对元素进行赋值操作</li>
+<li>遍历的时候,只有当前被遍历元素可见,其他不可见</li>
+</ul>
+<h3><span id="stream">Stream:</span></h3>
+<p>随着大数据兴起,就需要更高效便捷的遍历方式.来对数据进行遍历.那就是stream出现了.</p>
+<p>它的优点:</p>
+<ul>
+<li>像流水线一样来处理数据</li>
+<li>兼容常用的集合</li>
+<li>高效的可读性</li>
+<li>提供对数据集合的常规操作</li>
+<li>可以拼装不同的操作</li>
+</ul>
+<p>另外stream有lambda表达式的加成,更是如虎添翼.</p>
+<p>那么问题来了.简介的lambda有很好的可读性,但是Stream是怎么实现的呢,它的效率提升在哪里.</p>
+<p>流水线.如何定义流水线?原料如何流入?如何让流水线上的工人将处理过的原料交给下一个工人?流水线何时开始,何时结束运行?</p>
+<blockquote>
+<p>Stream处理数据的过程可以类别成工厂的流水线,数据可以看做流水线上的原料,对数据的操作可以看做流水线上的工人对原料的操作.</p>
+</blockquote>
+<p>Stream事实上是一个接口,并没有操作的缺省实现.最主要的实现是ReferencePipeline,而ReferencePipeline继承自AbstractPipeline,AbstractPipeline实现了BaseStream接口并实现了它的方法.<br>
+但是ReferencePipeline任然是一个抽象类.因为它并没有实现所有的抽象方法,比如AbstractPipeline中的opWrapSink.</p>
+<p>ReferencePipeline内部定义三个静态内部类,分别是:Head,StatelessOp,StatefulOp,但只有Head不再是抽象类.</p>
+<p><img src="Stream.png" alt></p>
+<p>流水线的结构有点像双向链表,节点之间通过引用连接,节点可以分为三类,控制数据输入的节点,操作数据的中间节点和控制数据输出的节点.</p>
+<p>ReferencePipeline包含了控制数据流入的Head,中间操作StatelessOp,StatefulOp,终止操作哦TerminalOp.</p>
+<h4><span id="stream常用的操作包括">Stream常用的操作包括:</span></h4>
+<h5><span id="中间操作intermedate-operations">中间操作(Intermedate Operations)</span></h5>
+<ul>
+<li>无状态(Stateless)操作</li>
+</ul>
+<p>每个数据处理是独立的,不会影响或者依赖之前的数据.如:</p>
+<p>filter(), flatMap(), flatMapToDouble(), flatMapToInt(), flatMapToLang(), map(), mapToDouble(), peek(), unordered() 等;</p>
+<ul>
+<li>有状态(Stateful)操作</li>
+</ul>
+<p>处理时会记录状态,比如处理了几个, 后面元素的处理会依赖前面记录的状态, 或者拿到所有元素才能继续下去.如:</p>
+<p>distinct(), sorted(), sorted(comparator), limit(), skip()等</p>
+<h5><span id="终止操作terminal-operations">终止操作(Terminal Operations)</span></h5>
+<ul>
+<li>非短路操作</li>
+</ul>
+<p>处理完所有数据才能得到结果,如:</p>
+<p>collect(), count(), forEach(), forEachOrdered(), max(), min(), reduce(), toArray()</p>
+<ul>
+<li>短路操作</li>
+</ul>
+<p>拿到符合预期的结果就会停下来, 不一定会处理完所有数据,如</p>
+<p>anyMatch(), allMatch(), noneMatch(), findFirst(), findAny()等.</p>
+<p><a href="https://mp.weixin.qq.com/s/BMvvTBkDHIyFFX6HQ4tNDA" target="_blank" rel="noopener">转:浅析 Java Stream 实现原理</a></p>
+
+                
+
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/blog/java8-stream/" data-toggle="tooltip" data-placement="top" title="原来你是这样的Stream">&larr; Previous Post</a>
+                        </li>
+                    
+                    
+                        <li class="next">
+                            <a href="/blog/nlp/fastext4jEncodeProblem/" data-toggle="tooltip" data-placement="top" title="FastText4j相关字符编码问题">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                <!-- duoshuo Share start -->
+                
+                <!-- 多说 Share end-->
+
+                <!-- 多说评论框 start -->
+                
+                <!-- 多说评论框 end -->
+
+                <!-- disqus comment start -->
+                
+                    <div class="comment">
+                        <div id="disqus_thread" class="disqus-thread"></div>
+                    </div>
+                
+                <!-- disqus comment end -->
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+    
+      <aside id="sidebar">
+        <div id="toc" class="toc-article">
+        <strong class="toc-title">Contents</strong>
+        
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">一.题目</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">外部迭代方式</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">stream实现方式</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">二.解读</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">2.1.</span> <span class="toc-nav-text">外部迭代:</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">2.2.</span> <span class="toc-nav-text">Stream:</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">2.2.1.</span> <span class="toc-nav-text">Stream常用的操作包括:</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">2.2.1.1.</span> <span class="toc-nav-text">中间操作(Intermedate Operations)</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">2.2.1.2.</span> <span class="toc-nav-text">终止操作(Terminal Operations)</span></a></li></ol></li></ol></li></ol></li></ol>
+        
+        </div>
+      </aside>
+    
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#Java" title="Java">Java</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                        <li><a href="https://quano.gitee.io/" target="_blank">My Wiki</a></li>
+                    
+                        <li><a href="http://beantech.org" target="_blank">Bean Tech</a></li>
+                    
+                        <li><a href="http://blog.kaijun.rocks" target="_blank">Kaijun&#39;s Blog</a></li>
+                    
+                        <li><a href="#" target="_blank">It Helps SEO</a></li>
+                    
+                </ul>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<!-- disqus embedded js code start (one page only need to embed once) -->
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = "quantumcs";
+    var disqus_identifier = "https://www.quartz.ren/blog/java/java8-stream/";
+    var disqus_url = "https://www.quartz.ren/blog/java/java8-stream/";
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<!-- disqus embedded js code start end -->
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: 'ℬ'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/quanquan.cs">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="http://weibo.com/quincyzh">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/quanoc">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://www.linkedin.com/in/韵-张-3978b4110">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Nova 2024 
+                    <br>
+                    Theme by <a href="https://github.com/huxpro/huxpro.github.io/">Hux</a> 
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span> 
+                    <!-- re-Ported by <a href="">BeanTech</a>
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="91px" height="20px"
+                        src="https://github.com/huxpro/huxpro.github.io/" >
+                    </iframe> -->
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://www.quartz.ren/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+
+
+<!-- Baidu Tongji -->
+
+<script>
+    // dynamic User by Hux
+    var _baId = '9088151460061a7c449bb9d5a3209fbc';
+
+    // Originial
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?" + _baId;
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+<!-- Image to hack wechat -->
+<img src="https://www.quartz.ren/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>

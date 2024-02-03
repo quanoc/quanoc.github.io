@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content>
+    <meta name="keyword" content="Nova,Hexo,Blog">
+    <link rel="shortcut icon" href="/img/ironman-draw.png">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <title>
+        
+          Netty线程模型 - xiaodong的博客 | Nova Blog
+        
+    </title>
+
+    <link rel="canonical" href="https://www.quartz.ren/blog/java/netty_thread_module/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS --> 
+    <link rel="stylesheet" href="/css/beantech.min.css">
+    
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/css/highlight.css">
+
+    <link rel="stylesheet" href="/css/widget.css">
+
+    <link rel="stylesheet" href="/css/rocket.css">
+
+    <link rel="stylesheet" href="/css/signature.css">
+
+    <link rel="stylesheet" href="/css/toc.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            background-image: url('undefined')
+            /*post*/
+        
+    }
+    
+    #signature{
+        background-image: url('/img/signature/BeanTechSign-white.png');
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/tags/#Netty" title="Netty">Netty</a>
+                            
+                        </div>
+                        <h1>Netty线程模型</h1>
+                        <h2 class="subheading">Netty Thread Model</h2>
+                        <span class="meta">
+                            Posted by Nova on
+                            2017-11-24
+                        </span>
+                    </div>
+                
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+	
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Nova Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Modify by Yu-Hsuan Yen -->
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <p>Netty框架的主要线程就是I/O线程，线程模型设计的好坏，决定了系统的吞吐量、并发性和安全性等架构质量属性。</p>
+<p>Netty线程模型设计以两点为主要目标：并发性能、锁避免。局部的无锁化和事件驱动的多路复用技术。</p>
+<p>首先，来学习下Netty的线程模型，next，通过对Nio线程NioEventLoop的源码分析，来了解下Netty对于I/O相关的多线程设计原理与实现。</p>
+<h2><span id="netty线程模型">Netty线程模型</span></h2>
+<p>不同的NIO框架对于Reactor模式的实现存在差异，但本质上还是遵循了Reactor的基础线程模型。</p>
+<blockquote>
+<p>I/O多路复用机制都依赖于一个事件分发器，事件分离器把接收到的客户事件分发到不同的事件处理器中.</p>
+</blockquote>
+<h3><span id="reactor单线程模型">Reactor单线程模型</span></h3>
+<p>指所有的I/O操作都在同一NIO线程上面完成。NIO线程的职责如下：</p>
+<ul>
+<li>作为NIO服务端，接受客户端的TCP连接</li>
+<li>作为NIO客户端，向服务端发起TCP连接</li>
+<li>读取通信对端的请求或者应答消息</li>
+<li>向通信对端发送消息或者应答消息</li>
+</ul>
+<p><img src="/img/blog/reactor_singler0.png" alt></p>
+<p>由于Reactor的异步非阻塞I/O模型，所有的I/O操作都不会导致阻塞，理论上一个线程可以独立处理所有I/O相关的操作。</p>
+<p>数据流通过Accepter类接受客户端的TCP连接请求消息，当链路建立成功之后，通过Dispatch将对应的ByteBuffer派发到指定的Handler上，进行消息解码。用户消息编码后通过NIO线程将消息发送给客户端。</p>
+<p>小容量的应用场景，可以使用单线程模型。但对于高负载、大并发的应用场景并不适合，主要原因如下：</p>
+<ul>
+<li>一个NIO线程同时处理成百上千的链路，性能上无法支撑，即便NIO线程的CPU负荷达到100%，也无法满足海量消息的编解码、读取和发送。</li>
+<li>当NIO线程负载过重之后，处理速度将变慢，会导致大量客户端连接超时，超时之后往往会重发，这更加重了NIO线程的负载，最终会导致大量消息积压和处理超时时，成为系统的性能瓶颈。</li>
+<li>可靠性问题：一旦NIO线程意外跑飞，或者进入死循环，会导致整个系统通信模块不可用不能接受和处理外部消息，造成节点故障。</li>
+</ul>
+<p>为了解决以上问题，演进出了Reactor多线程模型。</p>
+<h3><span id="reactor多线程模型">Reactor多线程模型</span></h3>
+<p>Reactor多线程模型与单线程模型最大的区别在于有一组NIO线程来处理I/O操作，它的原理如下图：</p>
+<p><img src="/img/blog/reactor_multithread.png" alt></p>
+<p>多线程模型的特点总结如下：</p>
+<ul>
+<li>有专门一个NIO线程（Acceptor线程），用于监听服务端，接受客户端的TCP连接请求</li>
+<li>网络I/O操作（读、写等）由一个NIO线程池负责。线程池可以采用标准的JDK线程池实现，它包含一个任务队列和N个可用的线程，由这些NIO线程负责消息的读取、编解码和发送。</li>
+<li>一个NIO线程可以同时处理N条链路，但一个链路只对应一个NIO线程，防止发生并发操作问题。</li>
+</ul>
+<p>在绝大多数场景下，Reactor多线程模型可以满足性能需求。但在个别的特殊场景下，一个NIO线程负责监听和处理所有的客户端连接可能存在性能问题。比如：并发百万的客户端连接、服务端需要对客户端握手进行安全认证。<br>
+这些场景下，单独一个Accepter线程可能存在性能不足的问题，为了解决性能问题，产生了第三种Reactor线程模型（主从Reactor多线程模型）</p>
+<h3><span id="主从reactor多线程模型">主从Reactor多线程模型</span></h3>
+<p>主从Reactor线程模型的特点是：服务器用户接受客户端连接的不再是一个单独的NIO线程，而是一个独立的NIO线程池。Accepter接收到客户端连接请求并处理完成后，交由I/O线程池处理读写等I/O操作以及编解码。Accepter线程池仅仅用于客户端的登录、握手和安全认证，一旦链路建立成功，就将链路注册到后端subReactor线程池的I/O线程上。</p>
+<p>利用主从NIO线程模型，可以解决一个服务端监听线程无法有效处理所有客户端连接的性能不足问题。因此，在Netty的官方demo中，推荐使用该线程模型。</p>
+<h3><span id="netty的线程模型">Netty的线程模型</span></h3>
+<p>Netty的线程模型并不是一成不变的，它取决于用户的启动参数配置。通过设置不同的启动参数，Netty可以同时支持Reactor但线程模型、多线程模型和主从Reactor多线程模型。</p>
+<p><img src="/img/blog/netty_thread.png" alt></p>
+<p>上图为Netty的线程模型，下面是Netty服务端的启动代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Configure the server.</span></span><br><span class="line">EventLoopGroup  bossGroup = <span class="keyword">new</span> NioEventLoopGroup();</span><br><span class="line">EventLoopGroup  workerGroup = <span class="keyword">new</span> NioEventLoopGroup();</span><br><span class="line"><span class="keyword">try</span>&#123;</span><br><span class="line">	ServerBootstrap b = <span class="keyword">new</span> ServerBootstrap();</span><br><span class="line">	b.group(bossGroup, workerGroup)</span><br><span class="line">	 .channel(NioServerSockerChannel<span class="class">.<span class="keyword">class</span>)</span></span><br><span class="line"><span class="class">	 .<span class="title">option</span>(<span class="title">ChannelOption</span>.<span class="title">SO_BACKLOG</span>, 100)</span></span><br><span class="line"><span class="class">	 .<span class="title">handler</span>(<span class="title">new</span> <span class="title">LoggingHandler</span>(<span class="title">LogLevel</span>.<span class="title">INFO</span>))</span></span><br><span class="line"><span class="class">	 .<span class="title">childHandler</span>(<span class="title">new</span> <span class="title">ChannelInitializer</span>&lt;<span class="title">SockerChannel</span>&gt;)()</span>&#123;</span><br><span class="line">	 	...</span><br><span class="line">	 &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>服务端启动的时候，创建两个NIOEventLoopGroup，它们实际是两个独立的Reator线程池。一个用于接受客户端的TCP连接，另一个用于处理I/O相关的读写操作，或者执行系统Task、定时任务Task等。</p>
+<p>Netty用于接受客户端请求的线程池职责如下：</p>
+<ul>
+<li>接受客户端TCP连接，初始化Channel参数</li>
+<li>将链路状态变更事件通知给ChannelPipeline</li>
+</ul>
+<p>Netty处理I/O操作的Reactor线程池责任如下：</p>
+<ul>
+<li>异步读取通信对端的数据报，发送读事件到ChannelPipeline</li>
+<li>异步发送消息到通信对端，调用ChannelPipeline的消息发送接口</li>
+<li>执行系统调用Task</li>
+<li>执行定时任务Task，例如链路空闲状态监测定时任务</li>
+</ul>
+<p>通过调整线程池的线程个数、是否共享线程池等方式，Netty的Reactor线程模型可以在单线程、多线程和主从多线程间切换，这种灵活的配置方式可以最大程度的满足用户的个性化定制。</p>
+<blockquote>
+<p>为了尽可能的提升性能，Netty在很多地方进行了无锁化的设计，例如在I/O线程内部串行操作，避免多线程竞争导致的性能下降问题。表面看，串行化设计似乎CPU利用率不高，并发程度不够，但是，通过调整NIO线程池的线程参数，可以同时启动多个串行化的线程并行运行，这种局部无锁化的串行线程设计相比一个队列、多个工作线程的模型性能更优。</p>
+</blockquote>
+<h3><span id="netty多线程编程最佳实践">Netty多线程编程最佳实践</span></h3>
+<ul>
+<li>创建两个NioEventLoopGroup，用于逻辑隔离NIO Acceptor和NIO I/O线程。</li>
+<li>尽量不要在ChannelHandler中启动用户线程（解码后用于将POJO消息派发到后端业务线程的除外）</li>
+<li>解码要放在NIO线程调用的解码Handler中进行，不要切换到用户线程中完成消息的解码。</li>
+<li>如果业务逻辑操作非常简单，没有复杂的业务逻辑计算，没有可能会导致线程被阻塞的磁盘操作、数据库操作、网络操作等，可以直接在NIO线程上完成业务逻辑编排，不需要切换到用户线程<br>
+-如果业务逻辑处理复杂，不要在NIO线程上完成，建议将解码后的POJO消息封装成Task，派发到业务线程池中由业务线程执行，以保证NIO线程尽快释放，处理其他的I/O操作。</li>
+</ul>
+<blockquote>
+<p>线程数量配置推荐</p>
+</blockquote>
+<h2><span id="nioeventloop源码分析">NioEventLoop源码分析</span></h2>
+<p>NioEventLoop并不是一个纯粹的I/O线程，它除了负责I/O的读写之外，还兼顾处理以下两类任务。</p>
+<ul>
+<li>系统Task：通过调用NioEventLoop的execute(Runnable task)方法实现，Netty有很多的系统Task，创建它们的主要原因是：当I/O线程和用户线程同时操作网络资源时，为了防止并发操作导致锁竞争，将用户线程的操作封装成Task放入消息队列中，由I/O线程负责执行，这样就实现了局部无锁化。</li>
+<li>定时任务：通过调用NioEventLoop的schedule(Runnable command, long delay, TimeUnit unit)方法实现。</li>
+</ul>
+<p>正是由于NioEventLoop具备多种职责，所以它的实现比较特殊，它并不是一个简单的Runnable。</p>
+<blockquote>
+<p>作为NIO框架的Reactor线程，NioEventLoop需要处理网络I/O读写事件，因此它必须聚合一个多路复用对象（Selector）。</p>
+</blockquote>
+<p>Selector的初始化非常简单，直接调用Selector.open()方法就能创建并打开一个新的Selector。</p>
+<p>未完待续</p>
+
+                
+
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/blog/netty_thread_module/" data-toggle="tooltip" data-placement="top" title="Netty线程模型">&larr; Previous Post</a>
+                        </li>
+                    
+                    
+                        <li class="next">
+                            <a href="/blog/esLearningGuide/" data-toggle="tooltip" data-placement="top" title="ElasticSearch学习指南">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                <!-- duoshuo Share start -->
+                
+                <!-- 多说 Share end-->
+
+                <!-- 多说评论框 start -->
+                
+                <!-- 多说评论框 end -->
+
+                <!-- disqus comment start -->
+                
+                    <div class="comment">
+                        <div id="disqus_thread" class="disqus-thread"></div>
+                    </div>
+                
+                <!-- disqus comment end -->
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+    
+      <aside id="sidebar">
+        <div id="toc" class="toc-article">
+        <strong class="toc-title">Contents</strong>
+        
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">Netty线程模型</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">Reactor单线程模型</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">Reactor多线程模型</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.3.</span> <span class="toc-nav-text">主从Reactor多线程模型</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.4.</span> <span class="toc-nav-text">Netty的线程模型</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.5.</span> <span class="toc-nav-text">Netty多线程编程最佳实践</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">NioEventLoop源码分析</span></a></li></ol>
+        
+        </div>
+      </aside>
+    
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#Netty" title="Netty">Netty</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                        <li><a href="https://quano.gitee.io/" target="_blank">My Wiki</a></li>
+                    
+                        <li><a href="http://beantech.org" target="_blank">Bean Tech</a></li>
+                    
+                        <li><a href="http://blog.kaijun.rocks" target="_blank">Kaijun&#39;s Blog</a></li>
+                    
+                        <li><a href="#" target="_blank">It Helps SEO</a></li>
+                    
+                </ul>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<!-- disqus embedded js code start (one page only need to embed once) -->
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = "quantumcs";
+    var disqus_identifier = "https://www.quartz.ren/blog/java/netty_thread_module/";
+    var disqus_url = "https://www.quartz.ren/blog/java/netty_thread_module/";
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<!-- disqus embedded js code start end -->
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: 'ℬ'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/quanquan.cs">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="http://weibo.com/quincyzh">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/quanoc">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://www.linkedin.com/in/韵-张-3978b4110">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Nova 2024 
+                    <br>
+                    Theme by <a href="https://github.com/huxpro/huxpro.github.io/">Hux</a> 
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span> 
+                    <!-- re-Ported by <a href="">BeanTech</a>
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="91px" height="20px"
+                        src="https://github.com/huxpro/huxpro.github.io/" >
+                    </iframe> -->
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://www.quartz.ren/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+
+
+<!-- Baidu Tongji -->
+
+<script>
+    // dynamic User by Hux
+    var _baId = '9088151460061a7c449bb9d5a3209fbc';
+
+    // Originial
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?" + _baId;
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+<!-- Image to hack wechat -->
+<img src="https://www.quartz.ren/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>

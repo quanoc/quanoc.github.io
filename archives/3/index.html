@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content>
+    <meta name="keyword" content="Nova,Hexo,Blog">
+    <link rel="shortcut icon" href="/img/ironman-draw.png">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <title>
+        
+          xiaodong的博客 | Nova Blog
+        
+    </title>
+
+    <link rel="canonical" href="https://www.quartz.ren/archives/3/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS --> 
+    <link rel="stylesheet" href="/css/beantech.min.css">
+    
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/css/highlight.css">
+
+    <link rel="stylesheet" href="/css/widget.css">
+
+    <link rel="stylesheet" href="/css/rocket.css">
+
+    <link rel="stylesheet" href="/css/signature.css">
+
+    <link rel="stylesheet" href="/css/toc.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            background-image: url('/img/header_img/home-bg-2-dark.png') 
+            /*config*/
+        
+    }
+    
+    #signature{
+        background-image: url('/img/signature/BeanTechSign-white.png');
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                
+                    <div class="site-heading">
+                        <h1>Nova Blog</h1>
+                        <!--<hr class="small">-->
+                        <span class="subheading">To Be A Lean Developer!</span>
+                    </div>
+                
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+	
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Nova Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Main Content -->
+<div class="container">
+    <div class="row">
+        
+
+<!-- USE SIDEBAR -->
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-1
+                col-md-8 col-md-offset-1
+                col-sm-12
+                col-xs-12
+                post-container
+            ">
+            
+                <!-- Main Content -->
+
+
+<div class="post-preview">
+
+    <a href="/blog/nlp/nlp001/">
+        <h2 class="post-title">
+            自然语言处理的挑战
+        </h2>
+        <h3 class="post-subtitle">
+            Nlp基础概论
+        </h3>
+        <div class="post-content-preview">
+            自然语言处理是计算机科学的一部分，它并不是简单地研究人类语言，而是融语言学、计算机科学、数学于一体的一门科学。
+深度学习在自然语言处理方面取得了重大进展。本文总结下深度学习在自然语言处理方面的最新进展，并讨论它的优势和挑战。
+可以把自然语言处理主要分五个任务，及分类，匹配，翻译，结构预测和序贯决策过程。
+对于前四个任务，深度学习方法已经超越或者明显超越了传统方法。
+端到端的训练和表征学习是深......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by Nova on
+            2019-05-24
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#NLP" title="NLP">NLP</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/blog/nlp/fastText002/">
+        <h2 class="post-title">
+            再看FastText
+        </h2>
+        <h3 class="post-subtitle">
+            What is fastText
+        </h3>
+        <div class="post-content-preview">
+            再次整理下fastText的原理~
+word2vec以及CBOW和Skip-gram
+先看看word2vec以及CBOW和skip-gram.Word2vec
+是一群用来产生词向量的相关模型.一款用于训练词向量的软件工具.Word2vec 可以根据给定的语料库，通过优化后的训练模型快速有效地将一个词语表达成向量形式，为自然语言处理领域的应用研究提供了新的工具。
+Word2vec依赖skip-......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by Nova on
+            2018-11-12
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#fasttext" title="fasttext">fasttext</a>
+            
+              <a href="/tags/#NLP" title="NLP">NLP</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/blog/flink/">
+        <h2 class="post-title">
+            神奇的Flink
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            What is Apache Flink?
+
+一个框架
+数据流状态计算
+分布式处理引擎
+
+Flink可以处理有界和无界的数据流, 应用场景有日志分析,用户行为,信用卡交易,传感器测量,所有这些数据都是作为流生成的.
+简单的case
+来看一个Sliding Window的需求:每隔5分钟输出过去一小时内点击量最多的前 N 个商品.
+关键词: 1小时窗口, 5分钟滑动一次, 点击最多, 前N个
+......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by Nova on
+            2018-11-03
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#Flink" title="Flink">Flink</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/blog/bigdata/flink/">
+        <h2 class="post-title">
+            神奇的Flink
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            What is Apache Flink?
+
+一个框架
+数据流状态计算
+分布式处理引擎
+
+Flink可以处理有界和无界的数据流, 应用场景有日志分析,用户行为,信用卡交易,传感器测量,所有这些数据都是作为流生成的.
+简单的case
+来看一个Sliding Window的需求:每隔5分钟输出过去一小时内点击量最多的前 N 个商品.
+关键词: 1小时窗口, 5分钟滑动一次, 点击最多, 前N个
+......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by Nova on
+            2018-11-03
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#Flink" title="Flink">Flink</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/blog/java8-stream/">
+        <h2 class="post-title">
+            原来你是这样的Stream
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            Java 8 API添加了一个新的抽象称为流Stream，可以让你以一种声明的方式处理数据。
+Stream 使用一种类似用 SQL 语句从数据库查询数据的直观方式来提供一种对 Java 集合运算和表达的高阶抽象。
+Stream API可以极大提高Java程序员的生产力，让程序员写出高效率、干净、简洁的代码。
+这种风格将要处理的元素集合看作一种流， 流在管道中传输， 并且可以在管道的节点上进行......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by Nova on
+            2018-10-11
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#Java" title="Java">Java</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/blog/java/java8-stream/">
+        <h2 class="post-title">
+            原来你是这样的Stream
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            Java 8 API添加了一个新的抽象称为流Stream，可以让你以一种声明的方式处理数据。
+Stream 使用一种类似用 SQL 语句从数据库查询数据的直观方式来提供一种对 Java 集合运算和表达的高阶抽象。
+Stream API可以极大提高Java程序员的生产力，让程序员写出高效率、干净、简洁的代码。
+这种风格将要处理的元素集合看作一种流， 流在管道中传输， 并且可以在管道的节点上进行......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by Nova on
+            2018-10-11
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#Java" title="Java">Java</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/blog/nlp/fastext4jEncodeProblem/">
+        <h2 class="post-title">
+            FastText4j相关字符编码问题
+        </h2>
+        <h3 class="post-subtitle">
+            fastText4j
+        </h3>
+        <div class="post-content-preview">
+            背景
+自2016年facebook开源 文本分类工具以来. 为实现工程上快速方便使用, 急需java版本的fasttext工具.
+调研之后fasttext4j是最为方便和准确的选择， 但存在一个问题： 中文文本的预测部分出现偏差. 因此对fasttext4j进行改造.
+编码
+编码问题主要是在于数据在处理过程中,到底加载成什么样子,是不是期望的01长度序列,或者字节长度.
+比如: 对于输入字符......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by Nova on
+            2018-09-15
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#fasttext" title="fasttext">fasttext</a>
+            
+              <a href="/tags/#NLP" title="NLP">NLP</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/blog/nlp/fasttext001/">
+        <h2 class="post-title">
+            FastText原理探索
+        </h2>
+        <h3 class="post-subtitle">
+            What is fastText
+        </h3>
+        <div class="post-content-preview">
+            Facebook于2016年开源的一个词向量计算和文本分类工具。
+它的有点非常明显，在文本分类任务中,fasttext(浅层网络)往往能取得和深度网络相媲美的精度，却在训练时间上比深度网络快许多数量级。
+预备知识
+softmax、ngram、word2vec原理
+之后在介绍fasttext的原理、使用keras搭建简单的分类器
+1. softmax
+softmax回归又被称作多项逻辑回归，它......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by Nova on
+            2018-08-18
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#fasttext" title="fasttext">fasttext</a>
+            
+              <a href="/tags/#NLP" title="NLP">NLP</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/blog/nlp/nlp_start/">
+        <h2 class="post-title">
+            初识NLP
+        </h2>
+        <h3 class="post-subtitle">
+            NLP introduction
+        </h3>
+        <div class="post-content-preview">
+            NLP (Natural Language Processing) 是人工智能（AI）的一个子领域。研究如何让计算机读懂人类语言。
+首先，在这里介绍下NLP的应用级别入门，了解一些基本的概念、应用场景，学会使用之后，再去深究其中的技术实现和算法原理。
+
+能做什么
+一些相关概念
+现有NLP库
+百度的自然语言处理服务API
+书籍推荐
+
+能做什么
+简单的例子：百度搜索[4个又念什么]，出现的结果是......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by Nova on
+            2018-04-26
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#NLP" title="NLP">NLP</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/blog/cpuLoad/">
+        <h2 class="post-title">
+            系统load average详解及问题排查思路
+        </h2>
+        <h3 class="post-subtitle">
+            load average
+        </h3>
+        <div class="post-content-preview">
+            load average指的是top命令输出的表示系统负载的展示项。
+有三个值：load average: 18.89, 17.93, 16.33。他们表示系统平均负载。
+系统平均负载被定义为特定时间间隔内运行队列中的平均进程数。
+如果一个进程满足以下条件则其就会位于运行队列中：
+
+它没有再等待I/O操作的结果
+它没有主动进入等待状态（也就是没有调用wait）
+没有被停止（例如：等待终止）
+......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by Nova on
+            2018-04-12
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#Linux" title="Linux">Linux</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+
+
+<!-- Pager -->
+
+<ul class="pager">
+    
+        <li class="previous">
+            <a href="/archives/2/">&larr; Newer Posts</a>
+        </li>
+    
+    
+        <li class="next">
+            <a href="/archives/4/">Older Posts &rarr;</a>
+        </li>
+    
+</ul>
+
+
+
+                <!-- 如果开启评论功能 -->
+                
+            </div>
+
+          <!-- Sidebar Container -->
+<div class="
+    col-lg-3 col-lg-offset-0
+    col-md-3 col-md-offset-0
+    col-sm-12
+    col-xs-12
+    sidebar-container
+">
+    
+        <!-- Featured Tags -->
+
+<section>
+    <!-- no hr -->
+    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+    <div class="tags">
+        
+            
+            <a href="/tags/#BlockChain" title="BlockChain" rel="3">BlockChain</a>
+            
+        
+            
+            <a href="/tags/#生活" title="生活" rel="5">生活</a>
+            
+        
+            
+            <a href="/tags/#Linux" title="Linux" rel="3">Linux</a>
+            
+        
+            
+            <a href="/tags/#Elasticsearch" title="Elasticsearch" rel="2">Elasticsearch</a>
+            
+        
+            
+            <a href="/tags/#分词" title="分词" rel="2">分词</a>
+            
+        
+            
+            <a href="/tags/#Flink" title="Flink" rel="2">Flink</a>
+            
+        
+            
+            <a href="/tags/#Life" title="Life" rel="4">Life</a>
+            
+        
+            
+            <a href="/tags/#Hexo" title="Hexo" rel="2">Hexo</a>
+            
+        
+            
+            <a href="/tags/#Blog" title="Blog" rel="2">Blog</a>
+            
+        
+            
+            <a href="/tags/#Java" title="Java" rel="2">Java</a>
+            
+        
+            
+            <a href="/tags/#Netty" title="Netty" rel="3">Netty</a>
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+            <a href="/tags/#微服务" title="微服务" rel="2">微服务</a>
+            
+        
+            
+        
+            
+            <a href="/tags/#Machine Learning" title="Machine Learning" rel="2">Machine Learning</a>
+            
+        
+            
+            <a href="/tags/#Deep Learning" title="Deep Learning" rel="3">Deep Learning</a>
+            
+        
+            
+            <a href="/tags/#fasttext" title="fasttext" rel="4">fasttext</a>
+            
+        
+            
+            <a href="/tags/#NLP" title="NLP" rel="12">NLP</a>
+            
+        
+            
+        
+            
+        
+    </div>
+</section>
+
+        <hr>
+    
+        <!-- Short About -->
+<section class="visible-md visible-lg">
+    <h5><a href="/about/">ABOUT ME</a></h5>
+    <div class="short-about">
+
+        
+            <img id = "avatar_pic" src="/img/avatar.jpg" />
+        
+
+        
+            <p>我要成为魔法师!</p>
+        
+
+        <!-- SNS Link -->
+        <ul class="list-inline">
+            
+            
+            
+                <li>
+                    <a target="_blank" href="https://www.zhihu.com/people/quanquan.cs">
+                        <span class="fa-stack fa-lg">
+                            <i class="fa fa-circle fa-stack-2x"></i>
+                            <i class="fa  fa-stack-1x fa-inverse">知</i>
+                        </span>
+                    </a>
+                </li>
+            
+
+            
+                <li>
+                    <a target="_blank" href="http://weibo.com/quincyzh">
+                        <span class="fa-stack fa-lg">
+                            <i class="fa fa-circle fa-stack-2x"></i>
+                            <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                        </span>
+                    </a>
+                </li>
+            
+
+            
+
+            
+                <li>
+                    <a target="_blank"  href="https://github.com/quanoc">
+                        <span class="fa-stack fa-lg">
+                            <i class="fa fa-circle fa-stack-2x"></i>
+                            <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                        </span>
+                    </a>
+                </li>
+            
+            
+            
+            
+                <li>
+                    <a target="_blank"  href="https://www.linkedin.com/in/韵-张-3978b4110">
+                        <span class="fa-stack fa-lg">
+                            <i class="fa fa-circle fa-stack-2x"></i>
+                            <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                        </span>
+                    </a>
+                </li>
+            
+        </ul>
+    </div>
+</section>
+        <hr>
+    
+        
+  <h5>RECENT POSTS</h3>
+  <div class="widget">
+    <ul>
+      
+        <li>
+          <a href="/blog/micoservice/002.gateway/">网关-理解与实现</a>
+        </li>
+      
+        <li>
+          <a href="/blog/risk/001.rule_engine/">规则引擎概述及实现</a>
+        </li>
+      
+        <li>
+          <a href="/blog/micoservice/001.cache/">缓存-应用场景</a>
+        </li>
+      
+        <li>
+          <a href="/blog/nlp/nlp_task02/">NLP基础任务(二)</a>
+        </li>
+      
+        <li>
+          <a href="/blog/ml/003.data_driven/">数据驱动</a>
+        </li>
+      
+    </ul>
+  </div>
+
+        <hr>
+    
+        <!-- Friends Blog -->
+
+<h5>FRIENDS</h5>
+<ul class="list-inline">
+
+    
+        <li><a href="https://quano.gitee.io/" target="_blank">My Wiki</a></li>
+    
+        <li><a href="http://beantech.org" target="_blank">Bean Tech</a></li>
+    
+        <li><a href="http://blog.kaijun.rocks" target="_blank">Kaijun&#39;s Blog</a></li>
+    
+        <li><a href="#" target="_blank">It Helps SEO</a></li>
+    
+</ul>
+
+        <hr>
+    
+</div>
+
+        
+    </div>
+</div>
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/quanquan.cs">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="http://weibo.com/quincyzh">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/quanoc">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://www.linkedin.com/in/韵-张-3978b4110">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Nova 2024 
+                    <br>
+                    Theme by <a href="https://github.com/huxpro/huxpro.github.io/">Hux</a> 
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span> 
+                    <!-- re-Ported by <a href="">BeanTech</a>
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="91px" height="20px"
+                        src="https://github.com/huxpro/huxpro.github.io/" >
+                    </iframe> -->
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://www.quartz.ren/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+
+
+<!-- Baidu Tongji -->
+
+<script>
+    // dynamic User by Hux
+    var _baId = '9088151460061a7c449bb9d5a3209fbc';
+
+    // Originial
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?" + _baId;
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+<!-- Image to hack wechat -->
+<img src="https://www.quartz.ren/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>

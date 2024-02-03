@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content>
+    <meta name="keyword" content="Nova,Hexo,Blog">
+    <link rel="shortcut icon" href="/img/ironman-draw.png">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <title>
+        
+          动态规划算法 - xiaodong的博客 | Nova Blog
+        
+    </title>
+
+    <link rel="canonical" href="https://www.quartz.ren/blog/nlp/nlp004/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS --> 
+    <link rel="stylesheet" href="/css/beantech.min.css">
+    
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="/css/highlight.css">
+
+    <link rel="stylesheet" href="/css/widget.css">
+
+    <link rel="stylesheet" href="/css/rocket.css">
+
+    <link rel="stylesheet" href="/css/signature.css">
+
+    <link rel="stylesheet" href="/css/toc.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            background-image: url('/img/post-img/0003.jpg')
+            /*post*/
+        
+    }
+    
+    #signature{
+        background-image: url('/img/signature/BeanTechSign-white.png');
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/tags/#NLP" title="NLP">NLP</a>
+                            
+                        </div>
+                        <h1>动态规划算法</h1>
+                        <h2 class="subheading">Nlp基础概论</h2>
+                        <span class="meta">
+                            Posted by Nova on
+                            2019-05-26
+                        </span>
+                    </div>
+                
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+	
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Nova Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Modify by Yu-Hsuan Yen -->
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <p>问题：假如有1、5、10、20、50、100元面值的钞票。现在需要凑出某个金额w.需要用到尽量少的钞票。</p>
+<p>根据生活经验，会采取这样的策略：能用100的尽量用100，否则尽量用50的…依次类推. 这种策略下，666共需要10张钞票。<br>
+这种策略称为贪心策略。贪心策略尽快<strong>让w变得更小</strong>。长期的生活经验表明，贪心策略是正确的。</p>
+<p>但是如果钞票的面值边了，只有1、5、11这三种面值，需要凑出15的时候，贪心就是失效。<br>
+贪心15=1 * 11+4 * 1 使用了5张钞票。然而15=3 * 5,只用3张就可以了。</p>
+<h3><span id="动态规划">动态规划</span></h3>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">核心概念：最优子结构、状态转移方程、边界、重叠子问题</span><br><span class="line">核心思想：拆分子问题；记住过往，减少重复计算</span><br><span class="line">解题思路：穷举举例、确定边界、找规律、确定最优子结构、写出状态转移方程</span><br><span class="line"></span><br><span class="line"><span class="quote">&gt; 记住求过的解来节省时间</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">- 青蛙跳阶问题</span><br><span class="line">f(n<span class="number">-1</span>)和f(n<span class="number">-2</span>) 称为 f(n) 的最优子结构</span><br><span class="line">f(n)= f（n<span class="number">-1</span>）+f（n<span class="number">-2</span>）就称为状态转移方程</span><br><span class="line">f(<span class="number">1</span>) = <span class="number">1</span>, f(<span class="number">2</span>) = <span class="number">2</span> 就是边界啦</span><br><span class="line">比如f(<span class="number">10</span>)= f(<span class="number">9</span>)+f(<span class="number">8</span>),f(<span class="number">9</span>) = f(<span class="number">8</span>) + f(<span class="number">7</span>),f(<span class="number">8</span>)就是重叠子问题</span><br></pre></td></tr></table></figure>
+<p>怎样才能避免上面的问题. 如果直接暴力枚举凑出w的方案，复杂度太高。枚举是不可以承受的。</p>
+<p>但可以尝试一下一步选择之后的影响，发生的变化。重新分析刚才的例子。如果取11，接下来就面对w=4的情况；如果取5，接下来面对w=10的情况。</p>
+<p>我们发现这些问题都有相同的形式：“给定w,凑出w所用的最少钞票是多少张？” .可以使用f(n)来表示“凑出n所需的最少钞票数量”。</p>
+<p>那么如果取了11.cost = f(4) +1 = 4+1 = 5.<br>
+如果取了5，cost = f(10) + 1 = 2 + 1 = 3.</p>
+<ul>
+<li>取11：cost=f(4)+1=4+1=5</li>
+<li>取5： cost=f(10)+1=2+1=3</li>
+<li>取1： cost=f(14)+1=4+1=5</li>
+</ul>
+<p>这给了我们一个至关重要的启示—— f(n) 只与 f(n-1),f(n-5),f(n-11) 相关；更确切地说：</p>
+<figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">f(<span class="built_in">n</span>)=<span class="built_in">min</span>&#123;f(<span class="built_in">n</span>-<span class="number">1</span>),f(<span class="built_in">n</span>-<span class="number">5</span>),f(<span class="built_in">n</span>-<span class="number">11</span>)&#125;+<span class="number">1</span></span><br></pre></td></tr></table></figure>
+<p>这个式子是非常激动人心的。我们要求出f(n)，只需要求出几个更小的f值；既然如此，我们从小到大把所有的f(i)求出来不就好了？注意一下边界情况即可</p>
+<p>我们以 O(n) 的复杂度解决了这个问题。（n为指定的凑出数的大小）。现在回过头来，我们看看它的原理：</p>
+<ul>
+<li>f(n) 只与f(n-1),f(n-5),f(n-11)的值相关。</li>
+<li>我们只关心 f(w) 的值，不关心是怎么凑出w的。</li>
+</ul>
+<p>这两个事实，保证了我们做法的正确性。它比起贪心策略，会分别算出取1、5、11的代价，从而做出一个正确决策，这样就避免掉了“鼠目寸光”！</p>
+<p>我们能这样干，取决于问题的性质：求出f(n)，只需要知道几个更小的 f©。我们将求解 f© 称作求解f(n)的“子问题”。</p>
+<p>这就是DP（动态规划，dynamic programming）.</p>
+<blockquote>
+<p>将一个问题拆成几个子问题，分别求解这些子问题，即可推断出大问题的解</p>
+</blockquote>
+<h3><span id="其他概念">其他概念</span></h3>
+<p>什么样的问题可以考虑使用动态规划解决呢？</p>
+<blockquote>
+<p>如果一个问题，可以把所有可能的答案穷举出来，并且穷举出来后，发现存在重叠子问题，就可以考虑使用动态规划。</p>
+</blockquote>
+<blockquote>
+<p>比如：最长递增子序列、最小编辑距离、背包问题、凑零钱问题</p>
+</blockquote>
+<h4><span id="动态规划">动态规划</span></h4>
+<p>动态规划实际上是一类题目的总称，并不是指某个固定的算法。动态规划的意义就是通过采用递推（或者分而治之）的策略，通过解决大问题的子问题从而解决整体的做法。</p>
+<p>动态规划的核心思想是巧妙的将问题拆分成多个子问题，通过计算子问题而得到整体问题的解。而子问题又可以拆分成更多的子问题，从而用类似递推迭代的方法解决要求的问题。</p>
+<p>与分治法最大的差别是：适合于用动态规划法求解的问题，经分解后得到的子问题往往不是互相独立的（即下一个子阶段的求解是建立在上一个子阶段的解的基础上，进行进一步的求解）。</p>
+<p>动态规划的解题核心主要分为两步：</p>
+<ul>
+<li>第一步：状态的定义</li>
+<li>第二步：状态转移方程的定义</li>
+</ul>
+<h4><span id="无后效性">无后效性</span></h4>
+<p>一旦f(n)确定，“我们如何凑出f(n)”就再也用不着了。</p>
+<p>要求出f(15)，只需要知道f(14),f(10),f(4)的值，而f(14),f(10),f(4)是如何算出来的，对之后的问题没有影响。</p>
+<p>“未来与过去无关”，这就是无后效性。</p>
+<p>（严格定义：如果给定某一阶段的状态，则在这一阶段以后过程的发展不受这阶段以前各段状态的影响。）</p>
+<h4><span id="最优子结构">最优子结构</span></h4>
+<p>回顾我们对f(n)的定义：我们记“凑出n所需的最少钞票数量”为f(n).<br>
+f(n)的定义就已经蕴含了“最优”。利用w=14,10,4的最优解，我们即可算出w=15的最优解。<br>
+大问题的最优解可以由小问题的最优解推出，这个性质叫做“最优子结构性质”。</p>
+<p>引入这两个概念之后，我们如何判断一个问题能否使用DP解决呢？</p>
+<p><strong>能将大问题拆成几个小问题，且满足无后效性、最优子结构性质。</strong></p>
+<h3><span id="dp的典型应用-dag">DP的典型应用-DAG</span></h3>
+<p>问题很简单：给定一个城市的地图，所有的道路都是单行道，而且不会构成环。每条道路都有过路费，问您从S点到T点花费的最少费用。<br>
+这个问题能用DP解决吗？我们先试着记从S到P的最少费用为f§.<br>
+想要到T，要么经过C，要么经过D。从而f(T)=min⁡{f©+20,f(D)+10}</p>
+<p>代码实现也很简单，拓扑排序即可。(TODO)</p>
+<h3><span id="dp原理的一些讨论">DP原理的一些讨论</span></h3>
+<p>在暴力算法中，可能解空间往往是指数级的大小；如果我们采用DP，那么有可能把解空间的大小降到多项式级。<br>
+一般来说，解空间越小，寻找解就越快。这样就完成了优化。</p>
+<h3><span id="最长上升子序列">最长上升子序列</span></h3>
+<h3><span id="例子一数塔取数问题">例子一:数塔取数问题</span></h3>
+<p>一个高度为N的由正整数组成的三角形，从上走到下，求经过的数字和的最大值。<br>
+每次只能走到下一层相邻的数上，例如从第3层的6向下走，只能走到第4层的2或9上。</p>
+<p>该三角形第n层有n个数字，例如：</p>
+<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">第一层有一个数字：<span class="number">5</span></span><br><span class="line">第二层有两个数字：<span class="number">8</span> <span class="number">4</span></span><br><span class="line">第三层有三个数字：<span class="number">3</span> <span class="number">6</span> <span class="number">9</span></span><br><span class="line">第四层有四个数字：<span class="number">7</span> <span class="number">2</span> <span class="number">9</span> <span class="number">5</span></span><br><span class="line"></span><br><span class="line">最优方案是：<span class="number">5</span> + <span class="number">8</span> + <span class="number">6</span> + <span class="number">9</span> = <span class="number">28</span></span><br></pre></td></tr></table></figure>
+<h3><span id="例子二编辑距离">例子二:编辑距离</span></h3>
+<p>编辑距离，又称Levenshtein距离（也叫做Edit Distance），是指两个字串之间，由一个转成另一个所需的最少编辑操作次数。许可的编辑操作包括将一个字符替换成另一个字符，插入一个字符，删除一个字符。<br>
+例如将kitten一字转成sitting：</p>
+<figure class="highlight xl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">sitten</span> （k-&gt;</span>s） </span><br><span class="line"><span class="function"><span class="title">sittin</span> （e-&gt;</span>i） </span><br><span class="line"><span class="function"><span class="title">sitting</span> （-&gt;</span>g） </span><br><span class="line">所以kitten和sitting的编辑距离是<span class="number">3</span>。俄罗斯科学家Vladimir Levenshtein在<span class="number">1965</span>年提出这个概念。 </span><br><span class="line">给出两个字符串a,b，求a和b的编辑距离。</span><br></pre></td></tr></table></figure>
+<p>状态定义:Fi,j表示第一个字符串的前i个字母和第二个字符串的前j个字母需要编辑的次数，求Fn,m，n和m分别是两个字符串的长度。</p>
+<p>状态转移方程：<br>
+当Fi,j-1=Fi-1,j时，Fi,j=Fi-1,j-1；<br>
+当Fi,j-1！=Fi-1,j时，Fi,j=min{Fi-1,j-1,Fi,j-1,Fi-1,j}+1.</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">public class Main &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        Scanner in = new Scanner(System.in);</span><br><span class="line">        String aStr = in.nextLine();</span><br><span class="line">        String bStr = in.nextLine();</span><br><span class="line">        int aLen = aStr.<span class="built_in">length</span>();</span><br><span class="line">        int bLen = bStr.<span class="built_in">length</span>();</span><br><span class="line">        int[][] dp = new int[aLen + <span class="number">1</span>][bLen + <span class="number">1</span>];</span><br><span class="line">        <span class="keyword">for</span> (int <span class="built_in">i</span> = <span class="number">0</span>; <span class="built_in">i</span> &lt; aLen + <span class="number">1</span>; <span class="built_in">i</span>++) dp[<span class="built_in">i</span>][<span class="number">0</span>] = <span class="built_in">i</span>;</span><br><span class="line">        <span class="keyword">for</span> (int <span class="built_in">i</span> = <span class="number">0</span>; <span class="built_in">i</span> &lt; bLen + <span class="number">1</span>; <span class="built_in">i</span>++) dp[<span class="number">0</span>][<span class="built_in">i</span>] = <span class="built_in">i</span>;</span><br><span class="line">        <span class="keyword">for</span> (int <span class="built_in">i</span> = <span class="number">1</span>; <span class="built_in">i</span> &lt; aLen + <span class="number">1</span>; <span class="built_in">i</span>++)</span><br><span class="line">            <span class="keyword">for</span> (int <span class="built_in">j</span> = <span class="number">1</span>; <span class="built_in">j</span> &lt; bLen + <span class="number">1</span>; <span class="built_in">j</span>++)</span><br><span class="line">                <span class="keyword">if</span> (aStr.charAt(<span class="built_in">i</span> - <span class="number">1</span>) == bStr.charAt(<span class="built_in">j</span> - <span class="number">1</span>))</span><br><span class="line">                    dp[<span class="built_in">i</span>][<span class="built_in">j</span>] = dp[<span class="built_in">i</span> - <span class="number">1</span>][<span class="built_in">j</span> - <span class="number">1</span>];</span><br><span class="line">                <span class="keyword">else</span></span><br><span class="line">                    dp[<span class="built_in">i</span>][<span class="built_in">j</span>] = Math.<span class="built_in">min</span>(dp[<span class="built_in">i</span> - <span class="number">1</span>][<span class="built_in">j</span> - <span class="number">1</span>], Math.<span class="built_in">min</span>(dp[<span class="built_in">i</span> - <span class="number">1</span>][<span class="built_in">j</span>], dp[<span class="built_in">i</span>][<span class="built_in">j</span> - <span class="number">1</span>])) + <span class="number">1</span>;</span><br><span class="line">        System.out.println(dp[aLen][bLen]);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><a href="https://www.zhihu.com/question/23995189" target="_blank" rel="noopener">什么是动态规划？动态规划的意义是什么？</a></p>
+<p><a href="https://blog.csdn.net/QuinnNorris/article/details/77484573" target="_blank" rel="noopener">java 动态规划策略原理及例题</a></p>
+
+                
+
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/blog/ml/ml001/" data-toggle="tooltip" data-placement="top" title="简单的神经网络">&larr; Previous Post</a>
+                        </li>
+                    
+                    
+                        <li class="next">
+                            <a href="/blog/nlp/nlp003/" data-toggle="tooltip" data-placement="top" title="如何学习NLP">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                <!-- duoshuo Share start -->
+                
+                <!-- 多说 Share end-->
+
+                <!-- 多说评论框 start -->
+                
+                <!-- 多说评论框 end -->
+
+                <!-- disqus comment start -->
+                
+                    <div class="comment">
+                        <div id="disqus_thread" class="disqus-thread"></div>
+                    </div>
+                
+                <!-- disqus comment end -->
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+    
+      <aside id="sidebar">
+        <div id="toc" class="toc-article">
+        <strong class="toc-title">Contents</strong>
+        
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">动态规划</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">其他概念</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">2.1.</span> <span class="toc-nav-text">动态规划</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">2.2.</span> <span class="toc-nav-text">无后效性</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">2.3.</span> <span class="toc-nav-text">最优子结构</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">DP的典型应用-DAG</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">DP原理的一些讨论</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">最长上升子序列</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">6.</span> <span class="toc-nav-text">例子一:数塔取数问题</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#null"><span class="toc-nav-number">7.</span> <span class="toc-nav-text">例子二:编辑距离</span></a></li></ol>
+        
+        </div>
+      </aside>
+    
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#NLP" title="NLP">NLP</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                        <li><a href="https://quano.gitee.io/" target="_blank">My Wiki</a></li>
+                    
+                        <li><a href="http://beantech.org" target="_blank">Bean Tech</a></li>
+                    
+                        <li><a href="http://blog.kaijun.rocks" target="_blank">Kaijun&#39;s Blog</a></li>
+                    
+                        <li><a href="#" target="_blank">It Helps SEO</a></li>
+                    
+                </ul>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<!-- disqus embedded js code start (one page only need to embed once) -->
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = "quantumcs";
+    var disqus_identifier = "https://www.quartz.ren/blog/nlp/nlp004/";
+    var disqus_url = "https://www.quartz.ren/blog/nlp/nlp004/";
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<!-- disqus embedded js code start end -->
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: 'ℬ'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/quanquan.cs">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank" href="http://weibo.com/quincyzh">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/quanoc">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://www.linkedin.com/in/韵-张-3978b4110">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Nova 2024 
+                    <br>
+                    Theme by <a href="https://github.com/huxpro/huxpro.github.io/">Hux</a> 
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span> 
+                    <!-- re-Ported by <a href="">BeanTech</a>
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="91px" height="20px"
+                        src="https://github.com/huxpro/huxpro.github.io/" >
+                    </iframe> -->
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://www.quartz.ren/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+
+
+<!-- Baidu Tongji -->
+
+<script>
+    // dynamic User by Hux
+    var _baId = '9088151460061a7c449bb9d5a3209fbc';
+
+    // Originial
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?" + _baId;
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+<!-- Image to hack wechat -->
+<img src="https://www.quartz.ren/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>
