@@ -11,6 +11,11 @@ tags:
     - NLP
 ---
 
+## 背景
+自2016年facebook开源 文本分类工具以来. 为实现工程上快速方便使用, 急需java版本的fasttext工具. 
+
+调研之后fasttext4j是最为方便和准确的选择， 但存在一个问题： 中文文本的预测部分出现偏差. 因此对fasttext4j进行改造.
+
 ## 编码
 编码问题主要是在于数据在处理过程中,到底加载成什么样子,是不是期望的01长度序列,或者字节长度.
 
@@ -95,9 +100,11 @@ CO 二进制为 11000000, 80 二进制为 10000000.
 然而:在java版本中,取子字特征时,是以字符遍历单词的,以下代码:
 
 ```java
+// true: 表示 字节c 不构成字符.  false: 表示字节c构成字符. 原理见UTF-8编码规则. 多字节字符的低位字节前两位都是 10. 所以通过掩码筛选. 
 protected boolean charMatches(char c) {
     return (c & 0xC0) == 0x80;
 }
+// 问题 在于 java 中 char 本身就是一个字符, 不需要筛选剔除掉不成字符的字节. 所以此方法返回false即可. 否则, 像 '安' (101101110001001)【Java编译器默认使用Unicode编码】 这样的字符丢失了子字特征. 
 ```
 将会过滤掉一些中文字符,导致一些特征丢失,出现预测结果很大不一样.
 
@@ -107,5 +114,44 @@ protected boolean charMatches(char c) {
 [unicode编码是占用几个字节？](https://segmentfault.com/q/1010000009652523)
 
 [ASCII，Unicode和UTF-8终于找到一个能完全搞清楚的文章了](https://blog.csdn.net/Deft_MKJing/article/details/79460485)
+
+
+
+## 总结一下
+1. c++版本的fasttext 针对多字节的字符 做了支持:  c++ 中的char代表一个字节。  **然后通过掩码与运算 跳过了不成字符的字节** 来提取子字ngram特征(字符级ngram)
+2. 然而java版本的 char代表一个字符. 所以根本就不需要过滤,直接按照字符处理即可.  java 中的char代表一个字符, 并且编译器默认使用Unicode编码. 所有有可能正好第一个字节就满足而charMatches. 这时, 这个字符就被当做不成字符的字节被丢掉. 
+
+## 子字概念
+字母的 Ngram 实现, 或者叫 字符级ngram.
+> 什么是字母的 Ngram? "字母Ngram"如何加入到模型中? 源码里面把这块叫做 Subwords
+
+其实就是把它和"词语"一样对待，一起求和取平均. 
+
+> 中文词subwords的计算: 其实就是多字节字符的计算(包括init算子字特征,预测的子字合并)
+
+> 以skipgram为例，输入的 vector 和所要预测的 vector 都是单个词语与subwords相加求和的结果
+
+[【手撕 - 自然语言处理】手撕 FastText 源码（02）基于字母的 Ngram 实现](https://blog.csdn.net/qq_28739605/article/details/104212521)
+
+
+## fasttext模型架构
+fastText模型架构和Word2Vec中的CBOW模型很类似,不同之处在于，fastText预测标签，而CBOW模型预测中间词
+
+fastText使用到两个tricks，一是通过构建一个霍夫曼编码树来加速softmax layer的计算，从而降低算法的时间复杂度，所以它在分类特别多的时候效果会更加明显。二是通过加入N-gram features进行补充，然后用hashing来减少N-gram的存储。
+
+
+
+
+[使用fasttext进行文档分类](http://www.dataguru.cn/article-13469-1.html)
+
+
+
+## 参考
+[Java基本类型占用的字节数](https://blog.csdn.net/yushulinfengprc/article/details/70227156)
+
+[基于fastText的意图识别框架](codercto.com/a/47959.html)
+
+[短文本分类和长文本分类的模型如何进行选择？](https://www.zhihu.com/question/326770917)
+
 
 

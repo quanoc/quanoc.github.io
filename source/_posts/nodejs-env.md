@@ -35,6 +35,8 @@ node环境搭建有两种方式
 
 在[淘宝镜像地址](https://npm.taobao.org/)选择稳定版本下载。2016-7， 官方推荐v4.4.4长期支持版
 
+已替换为：https://npmmirror.com/
+
 选择node-v4.4.4-linux-x86.tar.gz（这里是32位的ubuntu，所以选择32位node）将其移动到 /opt/目录下，解压
 
 ```
@@ -66,7 +68,11 @@ ln -s /opt/node-v4.4.4-linux-x86/bin/hexo  /usr/local/bin/hexo
 npm install -g hexo-cli --registry=http://registry.npm.taobao.org
 ```
 
+<<<<<<< HEAD
 #### 使用nvm管理node版本
+=======
+#### 使用nvm管理node版本(更新：推荐使用n管理node版本)
+>>>>>>> 81ed7b8036ba7b3a13b367a31cb1107a2edd3301
 nvm是很方便的node版本管理工具，但对于初学者建议使用离线安装node，以免会混淆一些概念。
 要使用nvm，安装配置如下：
 
@@ -88,13 +94,26 @@ nvm install stable
 npm install -g hexo-cli
 ```
 
+<<<<<<< HEAD
+=======
+#### n 管理node版本.
+
+- 安装 n
+sudo npm install -g n
+
+- 通过n 安装稳定版node.
+sudo n stable
+
+
+ npm install --registry=https://registry.npm.taobao.org
+
+>>>>>>> 81ed7b8036ba7b3a13b367a31cb1107a2edd3301
 #### 安装node后的换源
 node默认使用国外的源，下载三方库和框架速度缓慢，很有必要使用国内的源。
 
 * 设置npm使用淘宝源
 
-在~/.bashrc中添加
-
+在**~/.bashrc中添加**
 ```
 alias cnpm="npm --registry=https://registry.npm.taobao.org \
 --cache=$HOME/.npm/.cache/cnpm \
@@ -157,3 +176,8 @@ npm config set prefix "目录"
 ```
 npm install 软件包名
 ```
+
+
+# npm过期
+可能是源过期了. 更换国内其他源.
+npm config set registry http://mirrors.cloud.tencent.com/npm/

@@ -1,6 +1,6 @@
 ---
 layout:     post
-title:      "NLP简单入门"
+title:      "初识NLP"
 subtitle:   "NLP introduction"
 date:       2018-04-26
 catalog:    true
@@ -16,7 +16,6 @@ NLP (Natural Language Processing) 是人工智能（AI）的一个子领域。�
 
 - 能做什么
 - 一些相关概念
-- NLP自定义：像自定义语料等
 - 现有NLP库
 - 百度的自然语言处理服务API
 - 书籍推荐

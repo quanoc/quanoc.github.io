@@ -13,7 +13,8 @@ timezone:
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
 url: https://www.quartz.ren       # Note: don't forget to modify the CNAME file to your url
 root: /
-permalink: :year/:month/:day/:title/
+#permalink: :year/:month/:day/:title/
+permalink: blog/:title/
 permalink_defaults:
 
 #Custom Setting Start
@@ -23,8 +24,8 @@ SEOTitle: xiaodong的博客 | Nova Blog
 email: zhangquanquan@tom.com
 description: ""
 keyword: "Nova,Hexo,Blog"
-#header-img: img/header_img/home-bg-2-dark.png
-header-img: img/bj001.jpg
+header-img: img/header_img/home-bg-2-dark.png
+#header-img: img/bj001.jpg
 signature: true #show signature
 signature-img: img/signature/BeanTechSign-white.png 
 
@@ -33,7 +34,7 @@ signature-img: img/signature/BeanTechSign-white.png
 # RSS: false
 weibo_username:     quincyzh
 zhihu_username:     quanquan.cs
-github_username:    quantumcs
+github_username:    quanoc
 # twitter_username:   Demonbane_x
 #facebook_username:  YenYuHsuan
 linkedin_username:  韵-张-3978b4110
@@ -86,7 +87,8 @@ featured-condition-size: 1              # A tag will be featured if the size of 
 friends: [
     {
         title: "My Wiki",
-        href: "https://www.quartz.ren/wiki/"
+       # href: "https://wiki.quartz.ren/"
+        href: "https://quano.gitee.io/"
     },{
         title: "Bean Tech",
         href: "http://beantech.org"
@@ -174,10 +176,13 @@ theme: beantech
 sitemap:
   path: sitemap.xml
 
+aplayer:
+  meting: true
+  asset_inject: false
+
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type: git
-  repository: git@gitee.com:quantumcs/quantumcs.git
-# repository: git@github.com:quantumcs/quantumcs.github.io.git
+  repo: git@github.com:quanoc/quanoc.github.io.git
   branch: master
